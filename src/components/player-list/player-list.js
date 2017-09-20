@@ -4,20 +4,20 @@ import teamSelection from '../team-selection/team-selection'
 
 import { htmlToElement } from '../../dom-utils'
 
-const renderRow = (player, teams) => {
+const renderRow = (player, teams, onTeamSelect) => {
   const row = htmlToElement(rowTemplate)
 
   row.querySelector('[role=row-name]').innerText = player.name
   row.querySelector('[role=row-email]').innerText = player.email
 
-  const teamSelectionElement = teamSelection.render(teams, console.log)
+  const teamSelectionElement = teamSelection.render(player.team, teams, teamId => onTeamSelect(player.id, teamId))
 
   row.querySelector('team-selection').appendChild(teamSelectionElement)
 
   return row
 }
 
-const render = data => {
+const render = (data, events) => {
   const table = htmlToElement(tableTemplate)
 
   const tBody = table.querySelector('tbody')
@@ -25,7 +25,7 @@ const render = data => {
   const { players, teams } = data
 
   players.forEach(player => {
-    tBody.appendChild(renderRow(player, teams))
+    tBody.appendChild(renderRow(player, teams, events.onTeamSelect))
   })
 
   return table

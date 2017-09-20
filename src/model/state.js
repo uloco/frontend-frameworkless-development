@@ -29,9 +29,20 @@ const setPlayers = players => {
   invokeListeners()
 }
 
+const changeTeam = (playerId, teamId) => {
+  const player = data.players.find(player => player.id === playerId)
+  if (!player) {
+    return
+  }
+
+  player.team = parseInt(teamId)
+  invokeListeners()
+}
+
 export default {
   addChangeListener,
   setTeams,
-  setPlayers
+  setPlayers,
+  changeTeam
 }
 
