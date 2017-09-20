@@ -1,14 +1,9 @@
 import template from './page.html'
 import teams from '../../model/teams'
-
-const htmlToElement = html => {
-  var template = document.createElement('template')
-  template.innerHTML = html
-  return template.content.firstChild
-}
+import { htmlToElement } from '../../dom-utils'
 
 const render = data => {
-  const element = htmlToElement(`<div>${template}<p>${data.teams.length}</p></div>`)
+  const element = htmlToElement(template)
   element.querySelector('h2').addEventListener('click', console.log)
   return element
 }
