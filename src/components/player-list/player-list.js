@@ -10,7 +10,7 @@ const renderRow = (player, teams) => {
   row.querySelector('[role=row-name]').innerText = player.name
   row.querySelector('[role=row-email]').innerText = player.email
 
-  const teamSelectionElement = teamSelection.render(teams)
+  const teamSelectionElement = teamSelection.render(teams, console.log)
 
   row.querySelector('team-selection').appendChild(teamSelectionElement)
 
@@ -24,7 +24,7 @@ const render = data => {
 
   const { players, teams } = data
 
-  data.players.forEach(player => {
+  players.forEach(player => {
     tBody.appendChild(renderRow(player, teams))
   })
 

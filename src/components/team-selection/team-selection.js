@@ -7,6 +7,8 @@ const render = (teams, onChangeTeam) => {
 
   const select = teamSelectionElement.querySelector('select')
 
+  select.addEventListener('change', e => onChangeTeam(e.target.value))
+
   teams.forEach(team => {
     const option = document.createElement('option')
     option.text = team.name
