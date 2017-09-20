@@ -4,6 +4,7 @@
   "description": "Code For Frontend Frameworkless Development Workshop",
   "main": "index.js",
   "scripts": {
+    "postinstall": "sh build.sh",
     "test": "npm test",
     "start": "webpack-dev-server"
   },
@@ -21,7 +22,9 @@
     "url": "https://github.com/e-xtrategy/frontend-frameworkless-development/issues"
   },
   "homepage": "https://github.com/e-xtrategy/frontend-frameworkless-development#readme",
-  "dependencies": {},
+  "dependencies": {
+    "extrategy-styleguide": "git@github.com:e-xtrategy/public-project-stub.git#master"
+  },
   "devDependencies": {
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",

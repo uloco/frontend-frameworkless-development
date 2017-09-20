@@ -9,7 +9,7 @@ const htmlToElement = html => {
 
 const render = data => {
   const element = htmlToElement(`<div>${template}<p>${data.teams.length}</p></div>`)
-  element.querySelector('h1').addEventListener('click', console.log)
+  element.querySelector('h2').addEventListener('click', console.log)
   return element
 }
 
