@@ -23,13 +23,15 @@
   },
   "homepage": "https://github.com/e-xtrategy/frontend-frameworkless-development#readme",
   "dependencies": {
-    "extrategy-styleguide": "git@github.com:e-xtrategy/public-project-stub.git#master"
+    "public-project-stub": "git+ssh://git@github.com/e-xtrategy/public-project-stub.git#master"
   },
   "devDependencies": {
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.0",
+    "file-loader": "0.11.2",
     "html-loader": "0.5.1",
+    "url-loader": "0.5.9",
     "webpack": "3.6.0",
     "webpack-dev-server": "2.8.2"
   }

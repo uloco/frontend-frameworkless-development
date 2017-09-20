@@ -21,6 +21,10 @@ module.exports = {
         use: [ {
           loader: 'html-loader'
         }]
+      },
+      {
+        test: /\.svg$/,
+        use: [ 'url-loader?mimetype=image/svg+xml' ]
       }
     ]
   }
