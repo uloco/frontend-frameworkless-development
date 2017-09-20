@@ -1,0 +1,23 @@
+{
+  "name": "frontend-frameworkless-development",
+  "version": "0.0.1",
+  "description": "Code For Frontend Frameworkless Development Workshop",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e-xtrategy/frontend-frameworkless-development.git"
+  },
+  "keywords": [
+    "Frontend",
+    "Frameworkless"
+  ],
+  "author": "Francesco Strazzullo",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/e-xtrategy/frontend-frameworkless-development/issues"
+  },
+  "homepage": "https://github.com/e-xtrategy/frontend-frameworkless-development#readme"
+}
