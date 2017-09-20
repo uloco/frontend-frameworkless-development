@@ -4,7 +4,8 @@
   "description": "Code For Frontend Frameworkless Development Workshop",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "webpack-dev-server"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,13 @@
   "bugs": {
     "url": "https://github.com/e-xtrategy/frontend-frameworkless-development/issues"
   },
-  "homepage": "https://github.com/e-xtrategy/frontend-frameworkless-development#readme"
+  "homepage": "https://github.com/e-xtrategy/frontend-frameworkless-development#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.2",
+    "babel-preset-env": "1.6.0",
+    "webpack": "3.6.0",
+    "webpack-dev-server": "2.8.2"
+  }
 }
