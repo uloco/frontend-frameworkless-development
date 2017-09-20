@@ -2,10 +2,12 @@ import template from './page.html'
 import teams from '../../model/teams'
 import players from '../../model/players'
 import { htmlToElement } from '../../dom-utils'
+import playerList from '../player-list/player-list'
 
 const render = data => {
   const element = htmlToElement(template)
-  element.querySelector('h2').addEventListener('click', console.log)
+  const playerListElement = element.querySelector('player-list')
+  playerListElement.appendChild(playerList.render(data))
   return element
 }
 
