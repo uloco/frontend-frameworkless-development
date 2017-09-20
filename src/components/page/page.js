@@ -1,5 +1,6 @@
 import template from './page.html'
 import teams from '../../model/teams'
+import players from '../../model/players'
 import { htmlToElement } from '../../dom-utils'
 
 const render = data => {
@@ -9,7 +10,10 @@ const render = data => {
 }
 
 const init = state => {
-  teams.get().then(state.setTeams)
+  Promise.all([teams.get(), players.get()]).then(([teams, players]) => {
+    state.setTeams(teams)
+    state.setPlayers(players)
+  })
 }
 
 export default {

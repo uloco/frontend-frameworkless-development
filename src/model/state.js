@@ -1,7 +1,7 @@
 let changeListeners = []
 
 const data = {
-  people: [],
+  players: [],
   teams: []
 }
 
@@ -24,8 +24,14 @@ const setTeams = teams => {
   invokeListeners()
 }
 
+const setPlayers = players => {
+  data.players = [...players]
+  invokeListeners()
+}
+
 export default {
   addChangeListener,
-  setTeams
+  setTeams,
+  setPlayers
 }
 
