@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './index.js',
+  entry: './src/index.js',
   output: {
     path: __dirname,
     filename: 'bundle.js'
@@ -15,6 +15,12 @@ module.exports = {
             presets: ['env']
           }
         }
+      },
+      {
+        test: /\.html$/,
+        use: [ {
+          loader: 'html-loader'
+        }]
       }
     ]
   }
