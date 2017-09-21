@@ -49,8 +49,8 @@ const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + mi
 const getPlayersPerTeam = (players, teamId) => players.filter(player => player.team === teamId).length
 
 const random = () => {
+  data.players.forEach(player => { player.team = false })
   data.players.forEach(player => {
-    player.team = false
     do {
       const randomIndex = randomInt(0, data.teams.length - 1)
       player.team = data.teams[randomIndex].id
