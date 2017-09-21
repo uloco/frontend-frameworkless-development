@@ -218,13 +218,28 @@ exports.default = function () {
     invokeListeners();
   };
 
+  var startLoading = function startLoading() {
+    state.loadingCounter++;
+    invokeListeners();
+  };
+
+  var stopLoading = function stopLoading() {
+    state.loadingCounter--;
+    if (state.loadingCounter < 0) {
+      state.loadingCounter = 0;
+    }
+    invokeListeners();
+  };
+
   return {
     addChangeListener: addChangeListener,
     setTeams: setTeams,
     setPlayers: setPlayers,
     changeTeam: changeTeam,
     clear: clear,
-    random: random
+    random: random,
+    startLoading: startLoading,
+    stopLoading: stopLoading
   };
 };
 
@@ -263,9 +278,14 @@ var _dashboard = __webpack_require__(15);
 
 var _dashboard2 = _interopRequireDefault(_dashboard);
 
+var _spinner = __webpack_require__(16);
+
+var _spinner2 = _interopRequireDefault(_spinner);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (state) {
+  state.startLoading();
   Promise.all([_teams2.default.get(), _players2.default.get()]).then(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
         teams = _ref2[0],
@@ -273,6 +293,7 @@ exports.default = function (state) {
 
     state.setTeams(teams);
     state.setPlayers(players);
+    state.stopLoading();
   });
 
   var onTeamSelect = function onTeamSelect(playerId, teamId) {
@@ -280,6 +301,10 @@ exports.default = function (state) {
   };
 
   return function (data) {
+    if (data.loadingCounter) {
+      return (0, _spinner2.default)();
+    }
+
     var element = (0, _domUtils.htmlToElement)(_page2.default);
 
     element.querySelector('[role=btn-random]').addEventListener('click', state.random);
@@ -530,6 +555,35 @@ exports.default = function (data) {
 
   return (0, _domUtils.htmlToElement)('<div class="aligner-space-around text-gray">' + teamHtmlContent + '</div>');
 };
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _domUtils = __webpack_require__(0);
+
+var _spinner = __webpack_require__(17);
+
+var _spinner2 = _interopRequireDefault(_spinner);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  return (0, _domUtils.htmlToElement)(_spinner2.default);
+};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"text-gray\" style=\"font-size: 50px; text-align:center\">\n    <i class=\"fa fa-spinner fa-6 fa-spin\" aria-hidden=\"true\"></i>\n</div>";
 
 /***/ })
 /******/ ]);
