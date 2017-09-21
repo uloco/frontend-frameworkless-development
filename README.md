@@ -1,6 +1,8 @@
 # frontend-frameworkless-development
 Code for Frontend Frameworkless Development workshop
 
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 ## Setup
 
 Add your setup information here like
