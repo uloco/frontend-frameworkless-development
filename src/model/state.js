@@ -17,7 +17,7 @@ const addChangeListener = cb => {
   changeListeners.push(cb)
   cb(get())
   return () => {
-    changeListeners = changeListeners.filter(element => element === cb)
+    changeListeners = changeListeners.filter(element => element !== cb)
   }
 }
 
@@ -68,4 +68,3 @@ export default {
   clear,
   random
 }
-

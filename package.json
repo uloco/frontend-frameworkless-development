@@ -4,7 +4,7 @@
   "description": "Code For Frontend Frameworkless Development Workshop",
   "main": "index.js",
   "scripts": {
-    "test": "npm test",
+    "test": "jest",
     "start": "webpack-dev-server"
   },
   "repository": {
@@ -24,12 +24,21 @@
   "dependencies": {},
   "devDependencies": {
     "babel-core": "6.26.0",
+    "babel-jest": "21.0.2",
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.0",
     "file-loader": "0.11.2",
     "html-loader": "0.5.1",
+    "jest": "21.1.0",
+    "regenerator-runtime": "0.11.0",
     "url-loader": "0.5.9",
     "webpack": "3.6.0",
     "webpack-dev-server": "2.8.2"
+  },
+  "standard": {
+    "globals": [ 
+      "expect", 
+      "test" 
+    ]
   }
 }
