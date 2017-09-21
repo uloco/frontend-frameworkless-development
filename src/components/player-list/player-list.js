@@ -10,14 +10,14 @@ const renderRow = (player, teams, onTeamSelect) => {
   row.querySelector('[role=row-name]').innerText = player.name
   row.querySelector('[role=row-email]').innerText = player.email
 
-  const teamSelectionElement = teamSelection.render(player.team, teams, teamId => onTeamSelect(player.id, teamId))
+  const teamSelectionElement = teamSelection(player.team, teams, teamId => onTeamSelect(player.id, teamId))
 
   row.querySelector('team-selection').appendChild(teamSelectionElement)
 
   return row
 }
 
-const render = (data, events) => {
+export default (data, events) => {
   const table = htmlToElement(tableTemplate)
 
   const tBody = table.querySelector('tbody')
@@ -29,8 +29,4 @@ const render = (data, events) => {
   })
 
   return table
-}
-
-export default {
-  render
 }

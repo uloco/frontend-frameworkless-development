@@ -3,8 +3,10 @@ import page from './components/page/page'
 
 const rootNode = document.getElementById('root')
 
+const renderPage = page(state)
+
 const print = data => {
-  const newChild = page.render(data)
+  const newChild = renderPage(data)
 
   if (rootNode.firstChild) {
     rootNode.replaceChild(newChild, rootNode.firstChild)
@@ -15,5 +17,3 @@ const print = data => {
 
 state.addChangeListener(console.log)
 state.addChangeListener(data => window.requestAnimationFrame(() => print(data)))
-
-page.init(state)
