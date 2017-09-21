@@ -1,4 +1,9 @@
-import state from './state'
+import stateFactory from './state'
+let state
+
+beforeEach(() => {
+  state = stateFactory()
+})
 
 test('listeners should be invoked immediatly', () => {
   let counter = 0

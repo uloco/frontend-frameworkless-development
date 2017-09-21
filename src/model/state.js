@@ -1,70 +1,73 @@
-let changeListeners = []
-
-const data = {
+const INITIAL_STATE = {
   players: [],
   teams: [],
   maxPlayersPerTeam: 5,
   loadingCounter: 0
 }
 
-const invokeListeners = () => {
-  changeListeners.forEach(cb => cb(get()))
-}
-
-const get = () => Object.freeze(Object.assign({}, data))
-
-const addChangeListener = cb => {
-  changeListeners.push(cb)
-  cb(get())
-  return () => {
-    changeListeners = changeListeners.filter(element => element !== cb)
-  }
-}
-
-const setTeams = teams => {
-  data.teams = [...teams]
-  invokeListeners()
-}
-
-const setPlayers = players => {
-  data.players = [...players]
-  invokeListeners()
-}
-
-const changeTeam = (playerId, teamId) => {
-  const player = data.players.find(player => player.id === playerId)
-  if (!player) {
-    return
-  }
-
-  player.team = parseInt(teamId) >= 0 ? parseInt(teamId) : false
-  invokeListeners()
-}
-
-const clear = () => {
-  data.players.forEach(player => { player.team = false })
-  invokeListeners()
-}
-
 const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 const getPlayersPerTeam = (players, teamId) => players.filter(player => player.team === teamId).length
 
-const random = () => {
-  data.players.forEach(player => { player.team = false })
-  data.players.forEach(player => {
-    do {
-      const randomIndex = randomInt(0, data.teams.length - 1)
-      player.team = data.teams[randomIndex].id
-    } while (getPlayersPerTeam(data.players, player.team) > data.maxPlayersPerTeam)
-  })
-  invokeListeners()
-}
+export default (initialState = INITIAL_STATE) => {
+  let state = initialState
+  let changeListeners = []
 
-export default {
-  addChangeListener,
-  setTeams,
-  setPlayers,
-  changeTeam,
-  clear,
-  random
+  const invokeListeners = () => {
+    changeListeners.forEach(cb => cb(get()))
+  }
+
+  const get = () => Object.freeze(Object.assign({}, state))
+
+  const addChangeListener = cb => {
+    changeListeners.push(cb)
+    cb(get())
+    return () => {
+      changeListeners = changeListeners.filter(element => element !== cb)
+    }
+  }
+
+  const setTeams = teams => {
+    state.teams = [...teams]
+    invokeListeners()
+  }
+
+  const setPlayers = players => {
+    state.players = [...players]
+    invokeListeners()
+  }
+
+  const changeTeam = (playerId, teamId) => {
+    const player = state.players.find(player => player.id === playerId)
+    if (!player) {
+      return
+    }
+
+    player.team = parseInt(teamId) >= 0 ? parseInt(teamId) : false
+    invokeListeners()
+  }
+
+  const clear = () => {
+    state.players.forEach(player => { player.team = false })
+    invokeListeners()
+  }
+
+  const random = () => {
+    state.players.forEach(player => { player.team = false })
+    state.players.forEach(player => {
+      do {
+        const randomIndex = randomInt(0, state.teams.length - 1)
+        player.team = state.teams[randomIndex].id
+      } while (getPlayersPerTeam(state.players, player.team) > state.maxPlayersPerTeam)
+    })
+    invokeListeners()
+  }
+
+  return {
+    addChangeListener,
+    setTeams,
+    setPlayers,
+    changeTeam,
+    clear,
+    random
+  }
 }

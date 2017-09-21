@@ -1,12 +1,14 @@
-import state from './model/state'
-import page from './components/page/page'
+import stateFactory from './model/state'
+import renderPageFactory from './components/page/page'
 
 const rootNode = document.getElementById('root')
 
-const renderPage = page(state)
+const state = stateFactory()
 
-const print = data => {
-  const newChild = renderPage(data)
+const renderPage = renderPageFactory(state)
+
+const print = newState => {
+  const newChild = renderPage(newState)
 
   if (rootNode.firstChild) {
     rootNode.replaceChild(newChild, rootNode.firstChild)
@@ -15,5 +17,5 @@ const print = data => {
   }
 }
 
-state.addChangeListener(data => console.log('State Changed', data))
-state.addChangeListener(data => window.requestAnimationFrame(() => print(data)))
+state.addChangeListener(newState => console.log('State Changed', newState))
+state.addChangeListener(newState => window.requestAnimationFrame(() => print(newState)))
