@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "predeploy": "webpack",
+    "deploy": "node publish"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.0",
     "file-loader": "0.11.2",
+    "gh-pages": "1.0.0",
     "html-loader": "0.5.1",
     "jest": "21.1.0",
     "regenerator-runtime": "0.11.0",
@@ -36,10 +39,10 @@
     "webpack-dev-server": "2.8.2"
   },
   "standard": {
-    "globals": [ 
-      "expect", 
+    "globals": [
+      "expect",
       "test",
-      "beforeEach" 
+      "beforeEach"
     ]
   }
 }
