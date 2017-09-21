@@ -2,7 +2,8 @@ let changeListeners = []
 
 const data = {
   players: [],
-  teams: []
+  teams: [],
+  maxPlayersPerTeam: 5
 }
 
 const invokeListeners = () => {
@@ -35,7 +36,27 @@ const changeTeam = (playerId, teamId) => {
     return
   }
 
-  player.team = parseInt(teamId)
+  player.team = parseInt(teamId) >= 0 ? parseInt(teamId) : false
+  invokeListeners()
+}
+
+const clear = () => {
+  data.players.forEach(player => { player.team = false })
+  invokeListeners()
+}
+
+const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+const getPlayersPerTeam = (players, teamId) => players.filter(player => player.team === teamId).length
+
+const random = () => {
+  data.players.forEach(player => {
+    player.team = false
+    do {
+      const randomIndex = randomInt(0, data.teams.length - 1)
+      player.team = data.teams[randomIndex].id
+      console.log(player.team, getPlayersPerTeam(data.players, player.team))
+    } while (getPlayersPerTeam(data.players, player.team) > data.maxPlayersPerTeam)
+  })
   invokeListeners()
 }
 
@@ -43,6 +64,8 @@ export default {
   addChangeListener,
   setTeams,
   setPlayers,
-  changeTeam
+  changeTeam,
+  clear,
+  random
 }
 

@@ -1,20 +1,20 @@
 import { htmlToElement } from '../../dom-utils'
 
-export default data => {
-  const { teams, players } = data
+const teamToDiv = (team, players, maxPlayersPerTeam) => {
+  const playersPerTeam = players.filter(player => player.team === team.id).length
+  const className = playersPerTeam > maxPlayersPerTeam ? 'text-error' : ''
 
-  console.log(players)
+  return `<div class=${className}>
+            ${team.name} ${playersPerTeam}/${maxPlayersPerTeam}
+          </div>`
+}
+
+export default data => {
+  const { teams, players, maxPlayersPerTeam } = data
 
   const teamHtmlContent = teams
-        .map(team => {
-          const howManyPlayers = players.filter(player => player.team === team.id).length
-          return {
-            name: team.name,
-            players: howManyPlayers
-          }
-        })
-        .map(team => `<div>${team.name} ${team.players}/5</div>`)
-        .join('')
+                            .map(team => teamToDiv(team, players, maxPlayersPerTeam))
+                            .join('')
 
   return htmlToElement(`<div class="aligner-space-around text-gray">${teamHtmlContent}</div>`)
 }

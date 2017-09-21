@@ -16,6 +16,9 @@ export default state => {
   return data => {
     const element = htmlToElement(template)
 
+    element.querySelector('[role=btn-random]').addEventListener('click', state.random)
+    element.querySelector('[role=btn-clear]').addEventListener('click', state.clear)
+
     const playerListElement = element.querySelector('player-list')
     playerListElement.appendChild(playerList(data, {onTeamSelect}))
 
