@@ -3,7 +3,8 @@ let changeListeners = []
 const data = {
   players: [],
   teams: [],
-  maxPlayersPerTeam: 5
+  maxPlayersPerTeam: 5,
+  loadingCounter: 0
 }
 
 const invokeListeners = () => {

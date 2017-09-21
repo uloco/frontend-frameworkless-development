@@ -1,0 +1,182 @@
+[
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Cox Battle", 
+      "gender": "male", 
+      "age": 21, 
+      "id": 0, 
+      "team": false, 
+      "email": "coxbattle@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Sheri Roberson", 
+      "gender": "female", 
+      "age": 26, 
+      "id": 1, 
+      "team": false, 
+      "email": "sheriroberson@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Sonia Coffey", 
+      "gender": "female", 
+      "age": 28, 
+      "id": 2, 
+      "team": false, 
+      "email": "soniacoffey@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Freda Roman", 
+      "gender": "female", 
+      "age": 34, 
+      "id": 3, 
+      "team": false, 
+      "email": "fredaroman@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Elvira Bryan", 
+      "gender": "female", 
+      "age": 39, 
+      "id": 4, 
+      "team": false, 
+      "email": "elvirabryan@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Benjamin Guerra", 
+      "gender": "male", 
+      "age": 31, 
+      "id": 5, 
+      "team": false, 
+      "email": "benjaminguerra@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Rasmussen Garner", 
+      "gender": "male", 
+      "age": 29, 
+      "id": 6, 
+      "team": false, 
+      "email": "rasmussengarner@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Liliana Sweet", 
+      "gender": "female", 
+      "age": 26, 
+      "id": 7, 
+      "team": false, 
+      "email": "lilianasweet@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Lucia Sanchez", 
+      "gender": "female", 
+      "age": 37, 
+      "id": 8, 
+      "team": false, 
+      "email": "luciasanchez@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Henderson Dawson", 
+      "gender": "male", 
+      "age": 32, 
+      "id": 9, 
+      "team": false, 
+      "email": "hendersondawson@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Angel Mccullough", 
+      "gender": "female", 
+      "age": 25, 
+      "id": 10, 
+      "team": false, 
+      "email": "angelmccullough@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Tate Massey", 
+      "gender": "male", 
+      "age": 23, 
+      "id": 11, 
+      "team": false, 
+      "email": "tatemassey@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Petra Vance", 
+      "gender": "female", 
+      "age": 35, 
+      "id": 12, 
+      "team": false, 
+      "email": "petravance@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Amie Beard", 
+      "gender": "female", 
+      "age": 30, 
+      "id": 13, 
+      "team": false, 
+      "email": "amiebeard@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Stuart Casey", 
+      "gender": "male", 
+      "age": 30, 
+      "id": 14, 
+      "team": false, 
+      "email": "stuartcasey@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Lane Collier", 
+      "gender": "male", 
+      "age": 29, 
+      "id": 15, 
+      "team": false, 
+      "email": "lanecollier@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Manuela Shepherd", 
+      "gender": "female", 
+      "age": 21, 
+      "id": 16, 
+      "team": false, 
+      "email": "manuelashepherd@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Imogene Herrera", 
+      "gender": "female", 
+      "age": 35, 
+      "id": 17, 
+      "team": false, 
+      "email": "imogeneherrera@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Dominique Stokes", 
+      "gender": "female", 
+      "age": 20, 
+      "id": 18, 
+      "team": false, 
+      "email": "dominiquestokes@geekfarm.com"
+    }, 
+    {
+      "picture": "http://placehold.it/32x32", 
+      "name": "Keri Clarke", 
+      "gender": "female", 
+      "age": 28, 
+      "id": 19, 
+      "team": false, 
+      "email": "kericlarke@geekfarm.com"
+    }
+  ]

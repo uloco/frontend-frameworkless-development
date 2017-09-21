@@ -1,4 +1,11 @@
-export default {
-  get: () => window.fetch('http://www.json-generator.com/api/json/get/ctThuzTznm?indent=2').then(r => r.json())
-}
+import DATA from '../data/players.json'
 
+const TIMEOUT = 1000
+
+export default {
+  get: () => new Promise(resolve => {
+    setTimeout(() => {
+      resolve(DATA)
+    }, TIMEOUT)
+  })
+}
