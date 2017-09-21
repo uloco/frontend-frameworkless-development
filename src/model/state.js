@@ -62,12 +62,27 @@ export default (initialState = INITIAL_STATE) => {
     invokeListeners()
   }
 
+  const startLoading = () => {
+    state.loadingCounter++
+    invokeListeners()
+  }
+
+  const stopLoading = () => {
+    state.loadingCounter--
+    if (state.loadingCounter < 0) {
+      state.loadingCounter = 0
+    }
+    invokeListeners()
+  }
+
   return {
     addChangeListener,
     setTeams,
     setPlayers,
     changeTeam,
     clear,
-    random
+    random,
+    startLoading,
+    stopLoading
   }
 }
