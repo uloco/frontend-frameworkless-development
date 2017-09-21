@@ -15,5 +15,5 @@ const print = data => {
   }
 }
 
-state.addChangeListener(console.log)
+state.addChangeListener(data => console.log('State Changed', data))
 state.addChangeListener(data => window.requestAnimationFrame(() => print(data)))

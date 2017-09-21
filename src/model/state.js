@@ -54,7 +54,6 @@ const random = () => {
     do {
       const randomIndex = randomInt(0, data.teams.length - 1)
       player.team = data.teams[randomIndex].id
-      console.log(player.team, getPlayersPerTeam(data.players, player.team))
     } while (getPlayersPerTeam(data.players, player.team) > data.maxPlayersPerTeam)
   })
   invokeListeners()
