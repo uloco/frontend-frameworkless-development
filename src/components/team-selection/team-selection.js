@@ -2,7 +2,7 @@ import template from './team-selection.html'
 
 import { htmlToElement } from '../../dom-utils'
 
-export default (value, teams, onChangeTeam) => {
+export default (value, teams = [], onChangeTeam) => {
   const teamSelectionElement = htmlToElement(template)
 
   const select = teamSelectionElement.querySelector('select')
