@@ -1,7 +1,7 @@
 import stateFactory from './model/state'
 import renderPageFactory from './components/page/page'
-import teams from './model/teams'
-import players from './model/players'
+import teams from './services/teams'
+import players from './services/players'
 
 const rootNode = document.getElementById('root')
 

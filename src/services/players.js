@@ -1,4 +1,4 @@
-import DATA from '../data/teams.json'
+import DATA from './players.json'
 
 const TIMEOUT = 1000
 

@@ -7,20 +7,17 @@ const INITIAL_STATE = {
 
 const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 const getPlayersPerTeam = (players, teamId) => players.filter(player => player.team === teamId).length
+const freeze = state => Object.freeze(Object.assign({}, state))
 
 export default (initialState = INITIAL_STATE) => {
   let state = initialState
   let changeListeners = []
 
-  const invokeListeners = () => {
-    changeListeners.forEach(cb => cb(get()))
-  }
-
-  const get = () => Object.freeze(Object.assign({}, state))
+  const invokeListeners = () => changeListeners.forEach(cb => cb(freeze(state)))
 
   const addChangeListener = cb => {
     changeListeners.push(cb)
-    cb(get())
+    cb(freeze(state))
     return () => {
       changeListeners = changeListeners.filter(element => element !== cb)
     }
