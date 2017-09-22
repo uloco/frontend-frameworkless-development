@@ -86,23 +86,33 @@ var htmlToElement = exports.htmlToElement = function htmlToElement(html) {
 "use strict";
 
 
-var _state = __webpack_require__(2);
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _state2 = _interopRequireDefault(_state);
+var _observableState = __webpack_require__(2);
+
+var _observableState2 = _interopRequireDefault(_observableState);
 
 var _page = __webpack_require__(3);
 
 var _page2 = _interopRequireDefault(_page);
 
+var _teams = __webpack_require__(14);
+
+var _teams2 = _interopRequireDefault(_teams);
+
+var _players = __webpack_require__(16);
+
+var _players2 = _interopRequireDefault(_players);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var rootNode = document.getElementById('root');
 
-var state = (0, _state2.default)();
+var state = (0, _observableState2.default)();
 
 var renderPage = (0, _page2.default)(state);
 
-var print = function print(newState) {
+var renderApp = function renderApp(newState) {
   var newChild = renderPage(newState);
 
   if (rootNode.firstChild) {
@@ -117,9 +127,24 @@ state.addChangeListener(function (newState) {
 });
 state.addChangeListener(function (newState) {
   return window.requestAnimationFrame(function () {
-    return print(newState);
+    return renderApp(newState);
   });
 });
+
+var init = function init() {
+  state.startLoading();
+  Promise.all([_teams2.default.get(), _players2.default.get()]).then(function (_ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+        teams = _ref2[0],
+        players = _ref2[1];
+
+    state.setTeams(teams);
+    state.setPlayers(players);
+    state.stopLoading();
+  });
+};
+
+init();
 
 /***/ }),
 /* 2 */
@@ -149,6 +174,9 @@ var getPlayersPerTeam = function getPlayersPerTeam(players, teamId) {
     return player.team === teamId;
   }).length;
 };
+var freeze = function freeze(state) {
+  return Object.freeze(Object.assign({}, state));
+};
 
 exports.default = function () {
   var initialState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
@@ -157,18 +185,14 @@ exports.default = function () {
   var changeListeners = [];
 
   var invokeListeners = function invokeListeners() {
-    changeListeners.forEach(function (cb) {
-      return cb(get());
+    return changeListeners.forEach(function (cb) {
+      return cb(freeze(state));
     });
-  };
-
-  var get = function get() {
-    return Object.freeze(Object.assign({}, state));
   };
 
   var addChangeListener = function addChangeListener(cb) {
     changeListeners.push(cb);
-    cb(get());
+    cb(freeze(state));
     return function () {
       changeListeners = changeListeners.filter(function (element) {
         return element !== cb;
@@ -254,58 +278,37 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 var _page = __webpack_require__(4);
 
 var _page2 = _interopRequireDefault(_page);
 
-var _teams = __webpack_require__(6);
+var _dom = __webpack_require__(0);
 
-var _teams2 = _interopRequireDefault(_teams);
-
-var _players = __webpack_require__(8);
-
-var _players2 = _interopRequireDefault(_players);
-
-var _domUtils = __webpack_require__(0);
-
-var _playerList = __webpack_require__(10);
+var _playerList = __webpack_require__(6);
 
 var _playerList2 = _interopRequireDefault(_playerList);
 
-var _dashboard = __webpack_require__(15);
+var _dashboard = __webpack_require__(11);
 
 var _dashboard2 = _interopRequireDefault(_dashboard);
 
-var _spinner = __webpack_require__(16);
+var _spinner = __webpack_require__(12);
 
 var _spinner2 = _interopRequireDefault(_spinner);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (state) {
-  state.startLoading();
-  Promise.all([_teams2.default.get(), _players2.default.get()]).then(function (_ref) {
-    var _ref2 = _slicedToArray(_ref, 2),
-        teams = _ref2[0],
-        players = _ref2[1];
-
-    state.setTeams(teams);
-    state.setPlayers(players);
-    state.stopLoading();
-  });
-
-  var onTeamSelect = function onTeamSelect(playerId, teamId) {
-    return state.changeTeam(playerId, teamId);
-  };
-
   return function (data) {
+    var onTeamSelect = function onTeamSelect(playerId, teamId) {
+      return state.changeTeam(playerId, teamId);
+    };
+
     if (data.loadingCounter) {
       return (0, _spinner2.default)();
     }
 
-    var element = (0, _domUtils.htmlToElement)(_page2.default);
+    var element = (0, _dom.htmlToElement)(_page2.default);
 
     element.querySelector('[role=btn-random]').addEventListener('click', state.random);
     element.querySelector('[role=btn-clear]').addEventListener('click', state.clear);
@@ -343,94 +346,24 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _teams = __webpack_require__(7);
-
-var _teams2 = _interopRequireDefault(_teams);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var TIMEOUT = 1000;
-
-exports.default = {
-  get: function get() {
-    return new Promise(function (resolve) {
-      setTimeout(function () {
-        resolve(_teams2.default);
-      }, TIMEOUT);
-    });
-  }
-};
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-module.exports = [{"id":0,"name":"Red"},{"id":1,"name":"Green"},{"id":2,"name":"Blue"},{"id":3,"name":"Yellow"}]
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _players = __webpack_require__(9);
-
-var _players2 = _interopRequireDefault(_players);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var TIMEOUT = 1000;
-
-exports.default = {
-  get: function get() {
-    return new Promise(function (resolve) {
-      setTimeout(function () {
-        resolve(_players2.default);
-      }, TIMEOUT);
-    });
-  }
-};
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-module.exports = [{"picture":"http://placehold.it/32x32","name":"Cox Battle","gender":"male","age":21,"id":0,"team":false,"email":"coxbattle@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Sheri Roberson","gender":"female","age":26,"id":1,"team":false,"email":"sheriroberson@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Sonia Coffey","gender":"female","age":28,"id":2,"team":false,"email":"soniacoffey@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Freda Roman","gender":"female","age":34,"id":3,"team":false,"email":"fredaroman@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Elvira Bryan","gender":"female","age":39,"id":4,"team":false,"email":"elvirabryan@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Benjamin Guerra","gender":"male","age":31,"id":5,"team":false,"email":"benjaminguerra@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Rasmussen Garner","gender":"male","age":29,"id":6,"team":false,"email":"rasmussengarner@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Liliana Sweet","gender":"female","age":26,"id":7,"team":false,"email":"lilianasweet@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Lucia Sanchez","gender":"female","age":37,"id":8,"team":false,"email":"luciasanchez@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Henderson Dawson","gender":"male","age":32,"id":9,"team":false,"email":"hendersondawson@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Angel Mccullough","gender":"female","age":25,"id":10,"team":false,"email":"angelmccullough@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Tate Massey","gender":"male","age":23,"id":11,"team":false,"email":"tatemassey@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Petra Vance","gender":"female","age":35,"id":12,"team":false,"email":"petravance@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Amie Beard","gender":"female","age":30,"id":13,"team":false,"email":"amiebeard@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Stuart Casey","gender":"male","age":30,"id":14,"team":false,"email":"stuartcasey@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Lane Collier","gender":"male","age":29,"id":15,"team":false,"email":"lanecollier@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Manuela Shepherd","gender":"female","age":21,"id":16,"team":false,"email":"manuelashepherd@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Imogene Herrera","gender":"female","age":35,"id":17,"team":false,"email":"imogeneherrera@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Dominique Stokes","gender":"female","age":20,"id":18,"team":false,"email":"dominiquestokes@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Keri Clarke","gender":"female","age":28,"id":19,"team":false,"email":"kericlarke@geekfarm.com"}]
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _table = __webpack_require__(11);
+var _table = __webpack_require__(7);
 
 var _table2 = _interopRequireDefault(_table);
 
-var _row = __webpack_require__(12);
+var _row = __webpack_require__(8);
 
 var _row2 = _interopRequireDefault(_row);
 
-var _teamSelection = __webpack_require__(13);
+var _teamSelection = __webpack_require__(9);
 
 var _teamSelection2 = _interopRequireDefault(_teamSelection);
 
-var _domUtils = __webpack_require__(0);
+var _dom = __webpack_require__(0);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var renderRow = function renderRow(player, teams, onTeamSelect) {
-  var row = (0, _domUtils.htmlToElement)(_row2.default);
+  var row = (0, _dom.htmlToElement)(_row2.default);
 
   row.querySelector('[role=row-name]').innerText = player.name;
   row.querySelector('[role=row-email]').innerText = player.email;
@@ -444,13 +377,18 @@ var renderRow = function renderRow(player, teams, onTeamSelect) {
   return row;
 };
 
-exports.default = function (data, events) {
-  var table = (0, _domUtils.htmlToElement)(_table2.default);
+exports.default = function () {
+  var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var table = (0, _dom.htmlToElement)(_table2.default);
 
   var tBody = table.querySelector('tbody');
 
-  var players = data.players,
-      teams = data.teams;
+  var _data$players = data.players,
+      players = _data$players === undefined ? [] : _data$players,
+      _data$teams = data.teams,
+      teams = _data$teams === undefined ? [] : _data$teams;
 
 
   players.forEach(function (player) {
@@ -461,19 +399,19 @@ exports.default = function (data, events) {
 };
 
 /***/ }),
-/* 11 */
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = "<table class=\"table\">\n    <thead>\n        <tr class=\"text-small align-left\">\n            <th>Name</th>\n            <th>Email</th>\n            <th>Team</th>\n        </tr>\n    </thead>\n    <tbody>\n    </tbody>\n</table>";
 
 /***/ }),
-/* 12 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = "<tr>\n    <td role=\"row-name\"></td>\n    <td role=\"row-email\"></td>\n    <td>\n        <team-selection />\n    </td>\n</tr>";
 
 /***/ }),
-/* 13 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -483,16 +421,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _teamSelection = __webpack_require__(14);
+var _teamSelection = __webpack_require__(10);
 
 var _teamSelection2 = _interopRequireDefault(_teamSelection);
 
-var _domUtils = __webpack_require__(0);
+var _dom = __webpack_require__(0);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (value, teams, onChangeTeam) {
-  var teamSelectionElement = (0, _domUtils.htmlToElement)(_teamSelection2.default);
+exports.default = function (value) {
+  var teams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var onChangeTeam = arguments[2];
+
+  var teamSelectionElement = (0, _dom.htmlToElement)(_teamSelection2.default);
 
   var select = teamSelectionElement.querySelector('select');
 
@@ -516,13 +457,13 @@ exports.default = function (value, teams, onChangeTeam) {
 };
 
 /***/ }),
-/* 14 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"select full-width\">\n    <select role=\"select-team\">\n        <option value=\"-1\">Select...</option>\n    </select>\n    <i class=\"fa fa-angle-down fa-2\"></i>\n</div>";
 
 /***/ }),
-/* 15 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -532,7 +473,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _domUtils = __webpack_require__(0);
+var _dom = __webpack_require__(0);
 
 var teamToDiv = function teamToDiv(team, players, maxPlayersPerTeam) {
   var playersPerTeam = players.filter(function (player) {
@@ -553,8 +494,72 @@ exports.default = function (data) {
     return teamToDiv(team, players, maxPlayersPerTeam);
   }).join('');
 
-  return (0, _domUtils.htmlToElement)('<div class="aligner-space-around text-gray">' + teamHtmlContent + '</div>');
+  return (0, _dom.htmlToElement)('<div class="aligner-space-around text-gray">' + teamHtmlContent + '</div>');
 };
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dom = __webpack_require__(0);
+
+var _spinner = __webpack_require__(13);
+
+var _spinner2 = _interopRequireDefault(_spinner);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  return (0, _dom.htmlToElement)(_spinner2.default);
+};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"text-gray\" style=\"font-size: 50px; text-align:center\">\n    <i class=\"fa fa-spinner fa-6 fa-spin\" aria-hidden=\"true\"></i>\n</div>";
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _teams = __webpack_require__(15);
+
+var _teams2 = _interopRequireDefault(_teams);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var TIMEOUT = 1000;
+
+exports.default = {
+  get: function get() {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve(_teams2.default);
+      }, TIMEOUT);
+    });
+  }
+};
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+module.exports = [{"id":0,"name":"Red"},{"id":1,"name":"Green"},{"id":2,"name":"Blue"},{"id":3,"name":"Yellow"}]
 
 /***/ }),
 /* 16 */
@@ -567,23 +572,29 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _domUtils = __webpack_require__(0);
+var _players = __webpack_require__(17);
 
-var _spinner = __webpack_require__(17);
-
-var _spinner2 = _interopRequireDefault(_spinner);
+var _players2 = _interopRequireDefault(_players);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function () {
-  return (0, _domUtils.htmlToElement)(_spinner2.default);
+var TIMEOUT = 1000;
+
+exports.default = {
+  get: function get() {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve(_players2.default);
+      }, TIMEOUT);
+    });
+  }
 };
 
 /***/ }),
 /* 17 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"text-gray\" style=\"font-size: 50px; text-align:center\">\n    <i class=\"fa fa-spinner fa-6 fa-spin\" aria-hidden=\"true\"></i>\n</div>";
+module.exports = [{"picture":"http://placehold.it/32x32","name":"Cox Battle","gender":"male","age":21,"id":0,"team":false,"email":"coxbattle@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Sheri Roberson","gender":"female","age":26,"id":1,"team":false,"email":"sheriroberson@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Sonia Coffey","gender":"female","age":28,"id":2,"team":false,"email":"soniacoffey@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Freda Roman","gender":"female","age":34,"id":3,"team":false,"email":"fredaroman@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Elvira Bryan","gender":"female","age":39,"id":4,"team":false,"email":"elvirabryan@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Benjamin Guerra","gender":"male","age":31,"id":5,"team":false,"email":"benjaminguerra@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Rasmussen Garner","gender":"male","age":29,"id":6,"team":false,"email":"rasmussengarner@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Liliana Sweet","gender":"female","age":26,"id":7,"team":false,"email":"lilianasweet@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Lucia Sanchez","gender":"female","age":37,"id":8,"team":false,"email":"luciasanchez@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Henderson Dawson","gender":"male","age":32,"id":9,"team":false,"email":"hendersondawson@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Angel Mccullough","gender":"female","age":25,"id":10,"team":false,"email":"angelmccullough@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Tate Massey","gender":"male","age":23,"id":11,"team":false,"email":"tatemassey@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Petra Vance","gender":"female","age":35,"id":12,"team":false,"email":"petravance@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Amie Beard","gender":"female","age":30,"id":13,"team":false,"email":"amiebeard@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Stuart Casey","gender":"male","age":30,"id":14,"team":false,"email":"stuartcasey@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Lane Collier","gender":"male","age":29,"id":15,"team":false,"email":"lanecollier@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Manuela Shepherd","gender":"female","age":21,"id":16,"team":false,"email":"manuelashepherd@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Imogene Herrera","gender":"female","age":35,"id":17,"team":false,"email":"imogeneherrera@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Dominique Stokes","gender":"female","age":20,"id":18,"team":false,"email":"dominiquestokes@geekfarm.com"},{"picture":"http://placehold.it/32x32","name":"Keri Clarke","gender":"female","age":28,"id":19,"team":false,"email":"kericlarke@geekfarm.com"}]
 
 /***/ })
 /******/ ]);
