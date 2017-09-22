@@ -45,7 +45,8 @@
     ],
     "transform": {
       "^.+\\.js$": "babel-jest",
-      "^.+\\.html$": "<rootDir>/test/htmlLoader.js"
+      "^.+\\.html$": "<rootDir>/test/htmlLoader.js",
+      "^.+\\.svg$": "<rootDir>/test/htmlLoader.js"
     }
   },
   "standard": {
