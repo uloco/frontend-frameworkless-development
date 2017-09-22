@@ -2,7 +2,7 @@ import renderPageFactory from './page'
 import stateFactory from '../../model/state'
 
 describe('page', () => {
-  test('it should print a spinner when loading', () => {
+  test('it should render a spinner when loading', () => {
     const state = stateFactory()
     const renderPage = renderPageFactory(state)
 

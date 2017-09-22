@@ -20,13 +20,13 @@ const TEAMS = [
 ]
 
 describe('team-selection', () => {
-  test('it should print a single option when no team is provided', () => {
+  test('it should render a single option when no team is provided', () => {
     const teamSelection = renderTeamSelection()
     const options = teamSelection.querySelectorAll('option')
     expect(options.length).toBe(1)
   })
 
-  test('it should print options for every team', () => {
+  test('it should render options for every team', () => {
     const teamSelection = renderTeamSelection(null, TEAMS)
     const options = teamSelection.querySelectorAll('option')
     expect(options.length).toBe(TEAMS.length + 1)

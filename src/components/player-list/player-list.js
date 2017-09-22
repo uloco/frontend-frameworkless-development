@@ -17,12 +17,12 @@ const renderRow = (player, teams, onTeamSelect) => {
   return row
 }
 
-export default (data, events) => {
+export default (data = {}, events = {}) => {
   const table = htmlToElement(tableTemplate)
 
   const tBody = table.querySelector('tbody')
 
-  const { players, teams } = data
+  const { players = [], teams = [] } = data
 
   players.forEach(player => {
     tBody.appendChild(renderRow(player, teams, events.onTeamSelect))
