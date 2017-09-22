@@ -1,6 +1,6 @@
 import template from './team-selection.html'
 
-import { htmlToElement } from '../../dom-utils'
+import { htmlToElement } from '../../utils/dom'
 
 export default (value, teams = [], onChangeTeam) => {
   const teamSelectionElement = htmlToElement(template)

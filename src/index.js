@@ -1,11 +1,11 @@
-import stateFactory from './model/state'
+import observableStateFactory from './observable-state'
 import renderPageFactory from './components/page/page'
 import teams from './services/teams'
 import players from './services/players'
 
 const rootNode = document.getElementById('root')
 
-const state = stateFactory()
+const state = observableStateFactory()
 
 const renderPage = renderPageFactory(state)
 

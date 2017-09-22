@@ -1,5 +1,5 @@
 import template from './page.html'
-import { htmlToElement } from '../../dom-utils'
+import { htmlToElement } from '../../utils/dom'
 import playerList from '../player-list/player-list'
 import dashboard from '../dashboard/dashboard'
 import spinner from '../spinner/spinner'

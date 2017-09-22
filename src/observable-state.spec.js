@@ -1,8 +1,8 @@
-import stateFactory from './state'
+import observableStateFactory from './observable-state'
 let state
 
 beforeEach(() => {
-  state = stateFactory()
+  state = observableStateFactory()
 })
 
 test('listeners should be invoked immediatly', () => {

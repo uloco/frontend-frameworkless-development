@@ -1,9 +1,9 @@
 import renderPageFactory from './page'
-import stateFactory from '../../model/state'
+import observableStateFactory from '../../observable-state'
 
 describe('page', () => {
   test('it should render a spinner when loading', () => {
-    const state = stateFactory()
+    const state = observableStateFactory()
     const renderPage = renderPageFactory(state)
 
     let unsubscribe = state.addChangeListener(newState => {

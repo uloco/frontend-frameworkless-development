@@ -2,7 +2,7 @@ import tableTemplate from './table.html'
 import rowTemplate from './row.html'
 import teamSelection from '../team-selection/team-selection'
 
-import { htmlToElement } from '../../dom-utils'
+import { htmlToElement } from '../../utils/dom'
 
 const renderRow = (player, teams, onTeamSelect) => {
   const row = htmlToElement(rowTemplate)

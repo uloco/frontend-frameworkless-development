@@ -1,4 +1,4 @@
-import { htmlToElement } from '../../dom-utils'
+import { htmlToElement } from '../../utils/dom'
 
 const teamToDiv = (team, players, maxPlayersPerTeam) => {
   const playersPerTeam = players.filter(player => player.team === team.id).length
