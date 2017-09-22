@@ -4,24 +4,31 @@ import playerList from '../player-list/player-list'
 import dashboard from '../dashboard/dashboard'
 import spinner from '../spinner/spinner'
 
-export default state => {
-  return data => {
-    const onTeamSelect = (playerId, teamId) => state.changeTeam(playerId, teamId)
+export default observableState => {
+  const events = {
+    onTeamSelectChange: (playerId, teamId) => observableState.changeTeam(playerId, teamId),
+    onRandomClick: () => observableState.random(),
+    onClearClick: () => observableState.clear()
+  }
 
-    if (data.loadingCounter) {
+  return newState => {
+    if (newState.loadingCounter) {
       return spinner()
     }
 
     const element = htmlToElement(template)
 
-    element.querySelector('[role=btn-random]').addEventListener('click', state.random)
-    element.querySelector('[role=btn-clear]').addEventListener('click', state.clear)
+    element.querySelector('[role=btn-random]').addEventListener('click', events.onRandomClick)
+    element.querySelector('[role=btn-clear]').addEventListener('click', events.onClearClick)
 
     const playerListElement = element.querySelector('player-list')
-    playerListElement.appendChild(playerList(data, {onTeamSelect}))
+
+    playerListElement.appendChild(playerList(newState, {
+      onTeamSelect: events.onTeamSelectChange
+    }))
 
     const dashboardElement = element.querySelector('dashboard')
-    dashboardElement.appendChild(dashboard(data))
+    dashboardElement.appendChild(dashboard(newState))
 
     return element
   }
