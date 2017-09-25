@@ -51,6 +51,7 @@
   },
   "standard": {
     "globals": [
+      "describe",
       "expect",
       "test",
       "beforeEach"
