@@ -9,8 +9,8 @@ const teamToDiv = (team, players, maxPlayersPerTeam) => {
           </div>`
 }
 
-export default data => {
-  const { teams, players, maxPlayersPerTeam } = data
+export default newState => {
+  const { teams, players, maxPlayersPerTeam } = newState
 
   const teamHtmlContent = teams
                             .map(team => teamToDiv(team, players, maxPlayersPerTeam))
