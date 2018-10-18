@@ -9,7 +9,7 @@ const observableState = observableStateFactory()
 
 const renderPage = renderPageFactory(observableState)
 
-const renderApp = stateData => {
+const render = stateData => {
   const newChild = renderPage(stateData)
 
   if (rootNode.firstChild) {
@@ -20,7 +20,7 @@ const renderApp = stateData => {
 }
 
 observableState.addChangeListener(newState => console.log('State Changed', newState))
-observableState.addChangeListener(newState => window.requestAnimationFrame(() => renderApp(newState)))
+observableState.addChangeListener(newState => window.requestAnimationFrame(() => render(newState)))
 
 const init = () => {
   observableState.startLoading()
