@@ -1,7 +1,7 @@
 import observableStateFactory from './observable-state'
 import renderPageFactory from './components/page/page'
-import teams from './services/teams'
-import players from './services/players'
+import teamsAPI from './services/teams'
+import playersAPI from './services/players'
 
 const rootNode = document.getElementById('root')
 
@@ -24,7 +24,7 @@ observableState.addChangeListener(newState => window.requestAnimationFrame(() =>
 
 const init = () => {
   observableState.startLoading()
-  Promise.all([teams.get(), players.get()]).then(([teams, players]) => {
+  Promise.all([teamsAPI.get(), playersAPI.get()]).then(([teams, players]) => {
     observableState.setTeams(teams)
     observableState.setPlayers(players)
     observableState.stopLoading()
