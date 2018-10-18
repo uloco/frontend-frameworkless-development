@@ -16,5 +16,5 @@ export default newState => {
     .map(team => teamToDiv(team, players, maxPlayersPerTeam))
     .join('')
 
-  return htmlToElement(`<div class="aligner-space-around text-gray">${teamHtmlContent}</div>`)
+  return htmlToElement(`<div class="aligner-space-around text-black">${teamHtmlContent}</div>`)
 }
