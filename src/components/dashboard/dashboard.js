@@ -13,8 +13,8 @@ export default newState => {
   const { teams, players, maxPlayersPerTeam } = newState
 
   const teamHtmlContent = teams
-                            .map(team => teamToDiv(team, players, maxPlayersPerTeam))
-                            .join('')
+    .map(team => teamToDiv(team, players, maxPlayersPerTeam))
+    .join('')
 
   return htmlToElement(`<div class="aligner-space-around text-gray">${teamHtmlContent}</div>`)
 }
