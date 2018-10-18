@@ -5,12 +5,12 @@ import players from './services/players'
 
 const rootNode = document.getElementById('root')
 
-const state = observableStateFactory()
+const observableState = observableStateFactory()
 
-const renderPage = renderPageFactory(state)
+const renderPage = renderPageFactory(observableState)
 
-const renderApp = newState => {
-  const newChild = renderPage(newState)
+const renderApp = stateData => {
+  const newChild = renderPage(stateData)
 
   if (rootNode.firstChild) {
     rootNode.replaceChild(newChild, rootNode.firstChild)
@@ -19,15 +19,15 @@ const renderApp = newState => {
   }
 }
 
-state.addChangeListener(newState => console.log('State Changed', newState))
-state.addChangeListener(newState => window.requestAnimationFrame(() => renderApp(newState)))
+observableState.addChangeListener(newState => console.log('State Changed', newState))
+observableState.addChangeListener(newState => window.requestAnimationFrame(() => renderApp(newState)))
 
 const init = () => {
-  state.startLoading()
+  observableState.startLoading()
   Promise.all([teams.get(), players.get()]).then(([teams, players]) => {
-    state.setTeams(teams)
-    state.setPlayers(players)
-    state.stopLoading()
+    observableState.setTeams(teams)
+    observableState.setPlayers(players)
+    observableState.stopLoading()
   })
 }
 

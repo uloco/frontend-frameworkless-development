@@ -1,8 +1,8 @@
 import template from './page.html'
 import { htmlToElement } from '../../utils/dom'
-import playerList from '../player-list/player-list'
-import dashboard from '../dashboard/dashboard'
-import spinner from '../spinner/spinner'
+import renderPlayerList from '../player-list/player-list'
+import renderDashboard from '../dashboard/dashboard'
+import renderSpinner from '../spinner/spinner'
 
 export default observableState => {
   const events = {
@@ -11,25 +11,33 @@ export default observableState => {
     onClearClick: () => observableState.clear()
   }
 
-  return newState => {
-    if (newState.loadingCounter) {
-      return spinner()
+  const renderPage = (stateData) => {
+    if (stateData.loadingCounter) {
+      return renderSpinner()
     }
 
     const element = htmlToElement(template)
 
-    element.querySelector('[role=btn-random]').addEventListener('click', events.onRandomClick)
-    element.querySelector('[role=btn-clear]').addEventListener('click', events.onClearClick)
+    element
+      .querySelector('player-list')
+      .appendChild(renderPlayerList(stateData, {
+        onTeamSelect: events.onTeamSelectChange
+      }))
 
-    const playerListElement = element.querySelector('player-list')
+    element
+      .querySelector('dashboard')
+      .appendChild(renderDashboard(stateData))
 
-    playerListElement.appendChild(playerList(newState, {
-      onTeamSelect: events.onTeamSelectChange
-    }))
+    element
+      .querySelector('[role=btn-random]')
+      .addEventListener('click', events.onRandomClick)
 
-    const dashboardElement = element.querySelector('dashboard')
-    dashboardElement.appendChild(dashboard(newState))
+    element
+      .querySelector('[role=btn-clear]')
+      .addEventListener('click', events.onClearClick)
 
     return element
   }
+
+  return renderPage
 }
